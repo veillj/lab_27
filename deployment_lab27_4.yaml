@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mylab27
+  labels:
+    app: webnginx
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: mynginxwebpod
+  template:
+    metadata:
+      labels:
+        app: mynginxwebpod
+    spec:
+      containers:
+      - name: nginx
+        image: veillj/lab_27:1.0.0
+        imagePullPolicy: Always 
+---
+apiVersion: v1 
+kind: Service 
+metadata: 
+    name: mylab27 
+spec: 
+   selector: 
+     app: mynginxwebpod 
+   type: NodePort
+   ports: 
+        - protocol: TCP 
+          port: 80 
+          targetPort: 80 
